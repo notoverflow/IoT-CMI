@@ -1,0 +1,5 @@
+21 à 23°C pour un travail sédentaire en position assise ;
+19°C pour un travail physique léger en position assise ;
+18°C pour un travail physique léger en position debout ;
+17°C pour un travail physique soutenu en position debout ;
+15 à 16°C pour un travail physique intense.
