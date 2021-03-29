@@ -10,9 +10,8 @@
 #include <Wire.h>
 #include "rgb_lcd.h"
 
-int analogPin = 8;
-int son;
-
+//int analogPin = 8;
+int loudness;
 rgb_lcd lcd;
 
 int colorR = 0;
@@ -79,11 +78,17 @@ void loop() {
 
     // Compute heat index in Celsius (isFahreheit = false)
     float hic = dht.computeHeatIndex(t, h, false);
-    son = analogRead(analogPin);
-    delay(10);
-    Serial.print("Valeur de l'entree brut de l'ambiance sonore ->");
-    Serial.println(son);
+
+
+    loudness = analogRead(0);
+    Serial.println(loudness + " " + (66+(80-66)/1023)*loudness);
     delay(200);
+    
+//    son_fourchette = map(son,0,250,0,30);
+//    delay(10);
+//    Serial.print("Valeur re-etalonne pour l'utilisation dans une application -> ");
+//    Serial.println(son_fourchette);
+//    delay(200);
 //
     lcd.setCursor(0, 1);
 //    Serial.print(F("Humidity: "));
@@ -95,19 +100,20 @@ void loop() {
     lcd.print(t);
     lcd.print("C / ");
     lcd.print(h);
+    lcd.print("%");
 
     if (t < 20 || t > 22 || h > 60 || h < 40) {
 
         colorR = 255;
         colorG = 0;
         colorB = 0;
-        Serial.println("hors zone");
+//        Serial.println("hors zone");
 
     } else {
         colorR = 0;
         colorG = 255;
         colorB = 0;
-        Serial.println("bonne zone");
+//        Serial.println("bonne zone");
 
     }
 
