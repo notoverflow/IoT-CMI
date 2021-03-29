@@ -10,10 +10,14 @@
 #include <Wire.h>
 #include "rgb_lcd.h"
 
+int analogPin = 8;
+int son;
+
 rgb_lcd lcd;
 
 int colorR = 0;
 int colorG = 0;
+
 int colorB = 255;
 
 
@@ -23,8 +27,8 @@ int colorB = 255;
 // Pin 15 can work but DHT must be disconnected during program upload.
 
 // Uncomment whatever type you're using!
-#define DHTTYPE DHT11   // DHT 11
-//#define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
+//#define DHTTYPE DHT11   // DHT 11
+#define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
 //#define DHTTYPE DHT21   // DHT 21 (AM2301)
 
 // Connect pin 1 (on the left) of the sensor to +5V
@@ -41,54 +45,59 @@ int colorB = 255;
 DHT dht(DHTPIN, DHTTYPE);
 
 void setup() {
-  Serial.begin(9600);
-  Serial.println(F("DHTxx test!"));
+    Serial.begin(9600);
+    Serial.println(F("DHTxx test!"));
 
-  dht.begin();
-  
-  lcd.begin(16, 2);
-    
+    dht.begin();
+
+    lcd.begin(16, 2);
+
     lcd.setRGB(colorR, colorG, colorB);
-    
-    
+
+
     // Print a message to the LCD.
     lcd.print("temp/humidity:");
     delay(1000);
 }
 
 void loop() {
-  // Wait a few seconds between measurements.
-  delay(100);
+    // Wait a few seconds between measurements.
+    delay(100);
 
-  // Reading temperature or humidity takes about 250 milliseconds!
-  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
-  float h = dht.readHumidity();
-  // Read temperature as Celsius (the default)
-  float t = dht.readTemperature();
-  
-  // Check if any reads failed and exit early (to try again).
-  if (isnan(h) || isnan(t)) {
-    Serial.println(F("Failed to read from DHT sensor!"));
-    return;
-  }
+    // Reading temperature or humidity takes about 250 milliseconds!
+    // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
+    float h = dht.readHumidity();
+    // Read temperature as Celsius (the default)
+    float t = dht.readTemperature();
+
+    // Check if any reads failed and exit early (to try again).
+    if (isnan(h) || isnan(t)) {
+        Serial.println(F("Failed to read from DHT sensor!"));
+        return;
+    }
 
 
-  // Compute heat index in Celsius (isFahreheit = false)
-  float hic = dht.computeHeatIndex(t, h, false);
+    // Compute heat index in Celsius (isFahreheit = false)
+    float hic = dht.computeHeatIndex(t, h, false);
+    son = analogRead(analogPin);
+    delay(10);
+    Serial.print("Valeur de l'entree brut de l'ambiance sonore ->");
+    Serial.println(son);
+    delay(200);
 //
-  lcd.setCursor(0, 1);
-  Serial.print(F("Humidity: "));
-  Serial.print(h);
-  Serial.print(F("%  Temperature: "));
-  Serial.print(t);
-  Serial.print(F("°C "));
-  
-  lcd.print(t);
-  lcd.print("C / ");
-  lcd.print(h);
+    lcd.setCursor(0, 1);
+//    Serial.print(F("Humidity: "));
+//    Serial.print(h);
+//    Serial.print(F("%  Temperature: "));
+//    Serial.print(t);
+//    Serial.print(F("°C "));
+
+    lcd.print(t);
+    lcd.print("C / ");
+    lcd.print(h);
 
     if (t < 20 || t > 22 || h > 60 || h < 40) {
-        
+
         colorR = 255;
         colorG = 0;
         colorB = 0;
@@ -111,5 +120,5 @@ void loop() {
 //int colorG = 0;
 //int colorB = 0;
 
- 
+
 }
