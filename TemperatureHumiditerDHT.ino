@@ -12,6 +12,7 @@
 
 //int analogPin = 8;
 int loudness;
+int son_fourchette;
 rgb_lcd lcd;
 
 int colorR = 0;
@@ -75,20 +76,21 @@ void loop() {
         return;
     }
 
-
+  
     // Compute heat index in Celsius (isFahreheit = false)
     float hic = dht.computeHeatIndex(t, h, false);
 
 
+  
     loudness = analogRead(0);
-    Serial.println(loudness + " " + (66+(80-66)/1023)*loudness);
+    Serial.println(loudness);
+   
+       
+    //son_fourchette = map(loudness,0,250,0,30);
+    delay(10);
+    Serial.print("Valeur re-etalonne pour l'utilisation dans une application -> ");
+    Serial.println(son_fourchette);
     delay(200);
-    
-//    son_fourchette = map(son,0,250,0,30);
-//    delay(10);
-//    Serial.print("Valeur re-etalonne pour l'utilisation dans une application -> ");
-//    Serial.println(son_fourchette);
-//    delay(200);
 //
     lcd.setCursor(0, 1);
 //    Serial.print(F("Humidity: "));
