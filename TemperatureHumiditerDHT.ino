@@ -11,8 +11,8 @@
 #include "rgb_lcd.h"
 
 //int analogPin = 8;
-int loudness;
-int son_fourchette;
+int son;
+int son_etalone;
 rgb_lcd lcd;
 
 int colorR = 0;
@@ -82,14 +82,14 @@ void loop() {
 
 
   
-    loudness = analogRead(0);
-    Serial.println(loudness);
+    son = analogRead(0);
+    Serial.println(son);
    
        
-    //son_fourchette = map(loudness,0,250,0,30);
+    son_etalone = 4,235*pow(10,-5)*pow(son,3)-0.029*pow(son,2)*6.555*son - 420,504;
     delay(10);
     Serial.print("Valeur re-etalonne pour l'utilisation dans une application -> ");
-    Serial.println(son_fourchette);
+    Serial.println(son_etalone);
     delay(200);
 //
     lcd.setCursor(0, 1);
