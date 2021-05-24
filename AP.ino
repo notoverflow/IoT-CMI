@@ -16,16 +16,12 @@ void loop() {
   BridgeClient client = server.accept();
   if(client){
     while(client.available()<1);
-    Serial.print("Lecture d'une donnée : ");
+    Serial.print("Lecture d'une donnÃ©e : ");
     
-    String my_char1 = client.readStringUntil('\n');
-     //char my_char2 = client.read();
-    //char my_char3 = client.read();
-    //Console.write(my_char);
-    Serial.println(my_char1);
-    //Serial.write(my_char2);
-    //Serial.write(my_char3);
-    //Serial.println();
+    String my_data = client.readStringUntil('\n');
+
+    Serial.println(my_data);
+
     client.stop();
   }
 }
